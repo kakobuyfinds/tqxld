@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#103d2c">
+<title>OrientDig Spreadsheet | CAFANS Finds & Buying Checklist</title>
+<meta name="description" content="Explore an independent OrientDig spreadsheet guide with real CAFANS product finds, reference USD prices, category filters, sizing checks and a shopping budget tool.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OrientDig Spreadsheet | Find. Compare. Check.">
+<meta property="og:description" content="Browse CAFANS product references and build a clearer shortlist with sizing, QC and total-cost checks.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<!--
+Filename: index.html
+Deployment requirements:
+1. Add a self-referencing canonical and og:url using the actual public page URL.
+2. Publish this page over HTTPS and include its URL in your production sitemap.xml.
+3. Verify the domain in Google Search Console and Bing Webmaster Tools.
+4. Submit the sitemap and request indexing using the verified accounts.
+No indexing submission has been performed: the deployment URL and verified accounts were not provided.
+Do not add a canonical pointing to CAFANS unless this page is intended to be canonicalized there.
+
+Research references, reviewed for this build:
+https://orientdiglists.com/
+https://www.orientdigimport.com/
+https://orientdigwithqc.com/spreadsheet
+https://cafans.com/
+Search results vary by location and time; exact Google first-page positions were not independently verified.
+Applied improvements: static crawlable catalog, explicit source IDs, honest price context,
+usable filters, downloadable comparison rows, independent-site disclosure and practical cost checks.
+Catalog is a manually imported snapshot, not a live inventory feed.
+-->
+<style>
+:root{--bg:#f5f5ee;--ink:#152d23;--muted:#59675d;--green:#103d2c;--lime:#d7f493;--line:#d9dfd3;--white:#fff;--radius:22px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:4px}
+button,input,select{font:inherit}
+button,a,input,select,summary{touch-action:manipulation}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #b17a24;outline-offset:4px}
+.wrap{width:min(1160px,calc(100% - 40px));margin:auto}
+.skip{position:absolute;top:-80px;left:15px;padding:10px;background:white;z-index:10}
+.skip:focus{top:10px}
+header{border-bottom:1px solid var(--line)}
+.header{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{text-decoration:none;font-weight:850;letter-spacing:-1px;font-size:25px}
+.brand small{font-size:11px;letter-spacing:2px;display:block;color:var(--muted);font-weight:600}
+nav{display:flex;gap:24px;align-items:center}
+nav a{text-decoration:none;font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:12px 22px;border:1px solid var(--green);border-radius:100px;text-decoration:none;font-weight:700;background:var(--green);color:#fff}
+.btn.light{background:var(--lime);color:var(--green);border-color:var(--lime)}
+.btn.outline{background:transparent;color:var(--green)}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.hero{padding:76px 0 52px;text-align:center}
+h1{font-size:clamp(44px,7.5vw,88px);line-height:1.04;letter-spacing:-4px;margin:20px auto;max-width:1000px}
+h1 span{color:#47763d}
+.lead{font-size:19px;max-width:700px;margin:24px auto;color:var(--muted)}
+.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:28px 0}
+.note{font-size:13px;color:var(--muted)}
+.hero-note{max-width:730px;margin:20px auto}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--line);padding:23px 0;gap:24px}
+.strip strong{display:block;font-size:17px}
+.strip span{font-size:13px;color:var(--muted)}
+section{padding:56px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}
+h2{font-size:clamp(28px,4vw,42px);line-height:1.15;letter-spacing:-1.4px;margin:10px 0 15px}
+h3{line-height:1.3}
+.section-head p{max-width:600px;color:var(--muted);margin:0}
+.toolbar{display:grid;grid-template-columns:1fr 220px;gap:14px;margin-bottom:16px}
+label{display:block;font-size:13px;font-weight:700}
+input,select{width:100%;border:1px solid #bac8b8;border-radius:12px;background:white;color:var(--ink);padding:12px;margin-top:6px;min-height:48px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chip{border:1px solid #bdcbb8;background:transparent;color:var(--ink);padding:8px 16px;border-radius:50px;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:white}
+.results{display:flex;justify-content:space-between;gap:15px;align-items:center;margin:20px 0;font-size:13px;color:var(--muted)}
+.textbutton{background:none;border:0;color:var(--green);text-decoration:underline;padding:8px;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.product{background:white;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.product[hidden]{display:none}
+.photo{aspect-ratio:1/1;background:#e9ede3;position:relative;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.product:hover img{transform:scale(1.035)}
+.badge{position:absolute;left:14px;top:14px;font-size:11px;background:white;padding:5px 10px;border-radius:30px}
+.product-body{padding:23px;display:flex;flex-direction:column;flex:1}
+.product h3{margin:6px 0 10px;font-size:21px}
+.product p{font-size:14px;color:var(--muted);margin:4px 0 14px}
+.price{font-weight:800;font-size:25px}
+.price small{font-size:12px;font-weight:500;color:var(--muted)}
+.product .btn{margin-top:18px;width:100%}
+.product-source{font-size:12px;color:var(--muted)}
+.sourcebox{margin-top:22px;padding:18px 22px;border:1px solid var(--line);border-radius:14px;font-size:13px;color:var(--muted)}
+.more-categories{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.more-categories a{border:1px solid var(--line);border-radius:30px;padding:8px 16px;text-decoration:none;font-size:14px}
+.guide{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.step{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--lime);font-weight:800}
+.panel p,.panel li{color:var(--muted);font-size:15px}
+.panel ul{padding-left:20px}
+.budget{background:var(--green);color:white;border-radius:28px;padding:38px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.budget p{color:#d2dfd3}
+.budget .eyebrow{color:var(--lime)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.budget input{border:0}
+.total{margin-top:23px;padding-top:20px;border-top:1px solid #527460}
+.total output{display:block;font-size:42px;font-weight:800;line-height:1.3;color:var(--lime)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px}
+table{border-collapse:collapse;width:100%;background:white;min-width:640px}
+th,td{text-align:left;padding:17px 20px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+th{background:#e9eedf}
+tr:last-child td{border-bottom:0}
+.faq{max-width:850px;margin:auto}
+details{border-bottom:1px solid var(--line);padding:19px 0}
+summary{font-weight:750;cursor:pointer;padding-right:15px}
+details p{color:var(--muted);margin:13px 0 2px}
+.cta{background:var(--lime);border-radius:28px;padding:44px;text-align:center}
+.cta p{max-width:610px;margin:16px auto}
+footer{padding:35px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.footer-row{display:flex;justify-content:space-between;gap:30px}
+footer p{max-width:760px}
+.empty{padding:25px;border:1px dashed var(--line);border-radius:14px}
+@media(max-width:760px){
+.wrap{width:calc(100% - 28px)}nav{gap:13px}nav a{font-size:12px}
+.header{min-height:76px}.brand{font-size:21px}.brand small{font-size:9px}
+.hero{padding:49px 0 32px}h1{letter-spacing:-2px}.lead{font-size:17px}
+.strip{gap:15px}.strip strong{font-size:14px}.strip span{font-size:12px}
+section{padding:36px 0}.section-head{display:block}.toolbar{grid-template-columns:1fr}
+.grid{grid-template-columns:repeat(2,1fr);gap:12px}.product-body{padding:16px}
+.product h3{font-size:17px}.price{font-size:22px}.product .btn{padding:10px;font-size:13px}
+.guide,.budget{grid-template-columns:1fr}.budget{padding:25px;gap:20px}
+.footer-row{display:block}.cta{padding:30px 22px}
+}
+@media(max-width:450px){nav a:last-child{display:none}.grid{grid-template-columns:1fr}.strip{grid-template-columns:1fr;gap:10px}.strip strong{display:inline;margin-right:8px}.photo{aspect-ratio:5/4}.fields{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.photo img{transition:none}}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebPage",
+  "name":"OrientDig Spreadsheet | CAFANS Finds & Buying Checklist",
+  "description":"An independent guide for OrientDig spreadsheet research with a small CAFANS catalog snapshot and practical comparison tools.",
+  "inLanguage":"en",
+  "about":{"@type":"Thing","name":"OrientDig spreadsheet"},
+  "mainEntity":{
+    "@type":"ItemList",
+    "name":"CAFANS product reference snapshot",
+    "numberOfItems":3,
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"item":{"@type":"Thing","name":"Leather Slides","url":"https://cafans.com/goods-158791.html"}},
+      {"@type":"ListItem","position":2,"item":{"@type":"Thing","name":"Sweatshirt","url":"https://cafans.com/goods-158792.html"}},
+      {"@type":"ListItem","position":3,"item":{"@type":"Thing","name":"Unisex Embroidered Oversized T-Shirt","url":"https://cafans.com/goods-158200.html"}}
+    ]
+  }
+}
+</script>
+<link rel="canonical" href="https://kakobuyfinds.github.io/tqxld/">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+<div class="wrap header">
+<a class="brand" href="https://cafans.com">THE FIND EDIT<small>INDEPENDENT PRODUCT DISCOVERY</small></a>
+<nav aria-label="Main navigation">
+<a href="#catalog">The catalog</a>
+<a href="#guide">Buying checklist</a>
+<a href="#faq">FAQ</a>
+</nav>
+</div>
+</header>
+
+<main id="main" class="wrap">
+<section class="hero" aria-labelledby="title">
+<div class="eyebrow">Less endless scrolling. More useful details.</div>
+<h1 id="title">OrientDig spreadsheet.<br><span>Find your next fit.</span></h1>
+<p class="lead">Explore real CAFANS product references, compare indicative prices and build a shortlist around fit, photos and the complete purchase cost.</p>
+<div class="actions">
+<a class="btn" href="https://cafans.com">OrientDig spreadsheet <span aria-hidden="true">↗</span></a>
+<a class="btn outline" href="https://cafans.com">Buy it now <span aria-hidden="true">↗</span></a>
+</div>
+<p class="note hero-note">Both buttons open CAFANS, a separate product discovery website. This is an independent guide, not the official OrientDig website. Product compatibility with OrientDig must be checked individually.</p>
+</section>
+
+<div class="strip" aria-label="What this page offers">
+<div><strong>Real source references</strong><span>CAFANS listing names and product IDs</span></div>
+<div><strong>Clear price context</strong><span>USD references, separate from shipping</span></div>
+<div><strong>A practical shortlist</strong><span>Search, filter and export comparison rows</span></div>
+</div>
+
+<section id="catalog" aria-labelledby="catalog-title">
+<div class="section-head">
+<div>
+<div class="eyebrow">01 / The product edit</div>
+<h2 id="catalog-title">A small catalog. A clearer starting point.</h2>
+<p>Three actual listings imported from CAFANS. Search this snapshot or open CAFANS to explore its wider catalog.</p>
+</div>
+</div>
+
+<div class="toolbar">
+<label for="search">Search this selection
+<input id="search" type="search" placeholder="Try slides, sweatshirt or embroidered…" autocomplete="off">
+</label>
+<label for="sort">Sort by
+<select id="sort">
+<option value="original">Original selection</option>
+<option value="low">Reference price: low to high</option>
+<option value="high">Reference price: high to low</option>
+<option value="name">Product name: A–Z</option>
+</select>
+</label>
+</div>
+
+<div class="filters" role="group" aria-label="Filter products by category">
+<button class="chip" type="button" data-category="all" aria-pressed="true">All finds</button>
+<button class="chip" type="button" data-category="shoes" aria-pressed="false">Shoes</button>
+<button class="chip" type="button" data-category="hoodies" aria-pressed="false">Hoodies / Sweaters</button>
+<button class="chip" type="button" data-category="tshirts" aria-pressed="false">T-Shirts</button>
+</div>
+
+<div class="results">
+<span id="result-count" role="status" aria-live="polite">Showing 3 of 3 product references</span>
+<button id="export" class="textbutton" type="button">Download visible rows as CSV ↓</button>
+</div>
+
+<div class="grid" id="product-grid">
+<article class="product" data-category="shoes" data-price="62.36" data-name="Leather Slides" data-id="158791" data-order="0">
+<div class="photo">
+<img src="https://si.geilicdn.com/open1769158365-252808396-70340000019822fe6f2d0a23b491_1200_1200.jpg" alt="CAFANS listing photo for Leather Slides" width="1200" height="1200" loading="lazy" decoding="async">
+<span class="badge">SHOES</span>
+</div>
+<div class="product-body">
+<span class="product-source">CAFANS · ID 158791</span>
+<h3>Leather Slides</h3>
+<p>Check the listed size chart, footbed measurements and the selected color before adding this pair to your shortlist.</p>
+<div class="price">$62.36 <small>USD reference</small></div>
+<a class="btn" href="https://cafans.com">Buy it now ↗</a>
+</div>
+</article>
+
+<article class="product" data-category="hoodies" data-price="27.50" data-name="Sweatshirt" data-id="158792" data-order="1">
+<div class="photo">
+<img src="https://si.geilicdn.com/open1862809525-1234478995-56360000019a9d1b5cc60aa081c2_1200_1200.jpg" alt="CAFANS listing photo for Sweatshirt" width="1200" height="1200" loading="lazy" decoding="async">
+<span class="badge">HOODIES / SWEATERS</span>
+</div>
+<div class="product-body">
+<span class="product-source">CAFANS · ID 158792</span>
+<h3>Sweatshirt</h3>
+<p>Compare chest width, sleeve length and body length with a sweatshirt you already wear comfortably.</p>
+<div class="price">$27.50 <small>USD reference</small></div>
+<a class="btn" href="https://cafans.com">Buy it now ↗</a>
+</div>
+</article>
+
+<article class="product" data-category="tshirts" data-price="32.64" data-name="Unisex Embroidered Oversized T-Shirt" data-id="158200" data-order="2">
+<div class="photo">
+<img src="https://si.geilicdn.com/open1792148229-1234478995-4b8f00000196ff70111b0aa08290_1066_1066.jpg" alt="CAFANS listing photo for Unisex Embroidered Oversized T-Shirt" width="1066" height="1066" loading="lazy" decoding="async">
+<span class="badge">T-SHIRTS</span>
+</div>
+<div class="product-body">
+<span class="product-source">CAFANS · ID 158200</span>
+<h3>Unisex Embroidered Oversized T-Shirt</h3>
+<p>Review the embroidery close-ups and garment measurements. An oversized label does not specify an exact fit.</p>
+<div class="price">$32.64 <small>USD reference</small></div>
+<a class="btn" href="https://cafans.com">Buy it now ↗</a>
+</div>
+</article>
+</div>
+
+<p class="empty" id="empty" hidden>No matching items in this small snapshot. Try another keyword or browse the full CAFANS catalog.</p>
+
+<div class="sourcebox">
+<strong>Source & price notes.</strong> Product names, images and displayed USD references were taken from CAFANS on November 19, 2026. This is a static selection, not a live inventory feed. Reference amounts exclude unconfirmed charges and may change by variant or exchange rate. Images are listing photos; no warehouse QC photos have been verified here. All shopping buttons open the CAFANS homepage; use the exact title or product ID to locate a listing. Source paths: <code>/goods-158791.html</code>, <code>/goods-158792.html</code> and <code>/goods-158200.html</code>.
+</div>
+
+<div class="more-categories" aria-label="Explore more categories on CAFANS">
+<a href="https://cafans.com">Shoes ↗</a>
+<a href="https://cafans.com">Hoodies / Sweaters ↗</a>
+<a href="https://cafans.com">T-Shirts ↗</a>
+<a href="https://cafans.com">Jackets ↗</a>
+<a href="https://cafans.com">Pants / Shorts ↗</a>
+<a href="https://cafans.com">Bags & Accessories ↗</a>
+</div>
+<noscript><p>All product references are visible without JavaScript. Search, filtering, CSV export and the budget calculator require JavaScript.</p></noscript>
+</section>
+
+<section id="guide" aria-labelledby="guide-title">
+<div class="eyebrow">02 / Before you choose</div>
+<h2 id="guide-title">How to use an OrientDig spreadsheet</h2>
+<p>An OrientDig spreadsheet organizes product ideas and source links for research. A useful row identifies the exact listing and option you want to compare. This page provides CAFANS references; it does not establish that these items can currently be purchased through OrientDig.</p>
+<div class="guide">
+<article class="panel">
+<span class="step">1</span>
+<h3>Match the original listing</h3>
+<p>Find the item on CAFANS using its title or ID. Open the available source listing and keep its URL with your notes.</p>
+<ul><li>Confirm that photos and product options match.</li><li>Record the seller, selected variant and check date.</li><li>Verify agent support for that source before paying.</li></ul>
+</article>
+<article class="panel">
+<span class="step">2</span>
+<h3>Check fit and evidence</h3>
+<p>Choose measurements that matter for the product. Use consistent units and distinguish listing statements from things you have confirmed.</p>
+<ul><li>For shoes: size system, width and measurement method.</li><li>For clothing: chest, length, shoulders and sleeves.</li><li>For QC: exact listing, visible details and missing views.</li></ul>
+</article>
+<article class="panel">
+<span class="step">3</span>
+<h3>Compare the full quote</h3>
+<p>Keep the advertised item amount separate from delivery and other charges. Save the actual quote for the option and destination you choose.</p>
+<ul><li>Include domestic and international shipping.</li><li>Check payment fees and currency conversion.</li><li>Review return conditions and destination charges.</li></ul>
+</article>
+</div>
+</section>
+
+<section aria-labelledby="budget-title">
+<div class="budget">
+<div>
+<div class="eyebrow">03 / Make room for the extras</div>
+<h2 id="budget-title">A product price is only the starting point.</h2>
+<p>Add your own quotes in USD to estimate a shopping budget. The calculator adds the amounts you enter; it does not fetch agent rates or predict shipping charges.</p>
+<p class="note">International freight may depend on parcel dimensions, weight, route and destination. Unknown charges are not covered by this total. A zero means you entered no amount, not that a fee is waived.</p>
+</div>
+<form id="budget-form">
+<div class="fields">
+<label for="item-cost">Item subtotal · USD<input id="item-cost" name="items" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+<label for="domestic-cost">Domestic delivery · USD<input id="domestic-cost" name="domestic" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+<label for="international-cost">International delivery · USD<input id="international-cost" name="international" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+<label for="other-cost">Other quoted charges · USD<input id="other-cost" name="other" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+</div>
+<div class="total">
+<span>Total of entered amounts</span>
+<output id="budget-total" for="item-cost domestic-cost international-cost other-cost" aria-live="polite">$0.00</output>
+<span class="note" style="color:#d2dfd3">Planning estimate only. Confirm the payable amount at checkout.</span>
+</div>
+</form>
+</div>
+</section>
+
+<section aria-labelledby="comparison-title">
+<div class="eyebrow">04 / Keep the useful details</div>
+<h2 id="comparison-title">What belongs in your comparison sheet?</h2>
+<div class="table-wrap">
+<table>
+<caption style="text-align:left;padding:16px 20px">A practical checklist for product research</caption>
+<thead><tr><th scope="col">Field</th><th scope="col">Record</th><th scope="col">Why it helps</th></tr></thead>
+<tbody>
+<tr><th scope="row">Source & option</th><td>Listing URL, seller, color, size and product ID</td><td>Keeps similar products and variants distinguishable.</td></tr>
+<tr><th scope="row">Measurements</th><td>Product-specific dimensions, units and measuring method</td><td>Provides a more useful comparison than size labels alone.</td></tr>
+<tr><th scope="row">Photo evidence</th><td>Seller images, available QC, dates and missing views</td><td>Separates reference images from evidence about your own order.</td></tr>
+<tr><th scope="row">Price context</th><td>Original currency, variant quote, fees and delivery estimates</td><td>Makes differences in the complete budget visible.</td></tr>
+<tr><th scope="row">Open questions</th><td>Unknown materials, availability, return terms and agent support</td><td>Preserves uncertainties until you receive an answer.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="faq" aria-labelledby="faq-title">
+<div class="faq">
+<div class="eyebrow">05 / The details that matter</div>
+<h2 id="faq-title">OrientDig spreadsheet FAQ</h2>
+<details open>
+<summary>What is the OrientDig spreadsheet on this page?</summary>
+<p>It is an independent product research guide with a small, searchable CAFANS catalog snapshot. You can filter three imported references and export the visible rows as a CSV file. It is not an official OrientDig spreadsheet or a live feed of OrientDig inventory.</p>
+</details>
+<details>
+<summary>Where do the OrientDig spreadsheet and Buy it now buttons go?</summary>
+<p>Both open https://cafans.com. Product shopping buttons also open the CAFANS homepage. Search there using the exact product title or the ID printed on each card. This page does not take payments or create orders.</p>
+</details>
+<details>
+<summary>Can I buy every CAFANS find through OrientDig?</summary>
+<p>Support has not been confirmed for this selection. Obtain the original seller URL and check whether your chosen agent currently accepts that listing, variant and product category before placing an order.</p>
+</details>
+<details>
+<summary>Are the USD prices the final delivered amounts?</summary>
+<p>No. They reproduce the indicative USD amounts shown on the CAFANS homepage when this selection was prepared. The final amount can include different variant prices, currency conversion, delivery and other charges. Use a current quote for your destination.</p>
+</details>
+<details>
+<summary>Are these product photos QC photos?</summary>
+<p>The three cards show CAFANS listing images. They have not been verified as warehouse inspection photos. If QC images are available elsewhere, check the exact listing and variant they refer to. Photos alone do not establish authenticity, hidden construction details or the condition of a future order.</p>
+</details>
+<details>
+<summary>How do I choose a size?</summary>
+<p>Use the measurements and size chart for the exact product option. Compare them with a similar item you own using the same measurement method. Ask for missing dimensions rather than assuming that an S, M, L or shoe-size label fits the same across sellers.</p>
+</details>
+<details>
+<summary>Does the downloadable CSV contain the full CAFANS catalog?</summary>
+<p>No. It contains only the currently visible references from this three-item snapshot, along with source URLs, indicative prices and blank columns for your own notes. Browse CAFANS for additional products and current availability.</p>
+</details>
+</div>
+</section>
+
+<section>
+<div class="cta">
+<div class="eyebrow">Find something worth checking.</div>
+<h2>Build a better shortlist.</h2>
+<p>Start with a product you like. Confirm its source, compare the measurements and leave room in your budget for the complete quote.</p>
+<div class="actions">
+<a class="btn" href="https://cafans.com">OrientDig spreadsheet ↗</a>
+<a class="btn outline" href="https://cafans.com">Buy it now ↗</a>
+</div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="wrap footer-row">
+<div>
+<strong>THE FIND EDIT / OrientDig spreadsheet guide</strong>
+<p>Independent information resource. No official affiliation with OrientDig or the brands shown in external listings is claimed. Product names and images identify their source listings. Orders, payments, delivery and customer service are handled by the relevant external providers.</p>
+<p>Catalog snapshot prepared: November 19, 2026. Search and budget entries are processed in your browser; this page contains no analytics or account forms. Remote product images are loaded from the source image host.</p>
+</div>
+<a href="https://cafans.com">Explore CAFANS ↗</a>
+</div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const search=document.getElementById("search");
+const sort=document.getElementById("sort");
+const grid=document.getElementById("product-grid");
+const cards=Array.from(grid.querySelectorAll(".product"));
+const chips=Array.from(document.querySelectorAll("[data-category].chip"));
+const count=document.getElementById("result-count");
+const empty=document.getElementById("empty");
+let category="all";
+
+function updateCatalog(){
+const query=search.value.toLowerCase().trim();
+cards.forEach(function(card){
+card.hidden=!((category==="all"||card.dataset.category===category)&&
+(card.dataset.name+" "+card.dataset.id+" "+card.dataset.category).toLowerCase().includes(query));
+});
+const ordered=cards.slice().sort(function(a,b){
+if(sort.value==="low")return Number(a.dataset.price)-Number(b.dataset.price);
+if(sort.value==="high")return Number(b.dataset.price)-Number(a.dataset.price);
+if(sort.value==="name")return a.dataset.name.localeCompare(b.dataset.name);
+return Number(a.dataset.order)-Number(b.dataset.order);
+});
+ordered.forEach(function(card){grid.appendChild(card);});
+const visible=cards.filter(function(card){return !card.hidden;}).length;
+count.textContent="Showing "+visible+" of "+cards.length+" product references";
+empty.hidden=visible!==0;
+}
+search.addEventListener("input",updateCatalog);
+sort.addEventListener("change",updateCatalog);
+chips.forEach(function(chip){
+chip.addEventListener("click",function(){
+category=chip.dataset.category;
+chips.forEach(function(button){button.setAttribute("aria-pressed",String(button===chip));});
+updateCatalog();
+});
+});
+
+document.getElementById("export").addEventListener("click",function(){
+const visible=Array.from(grid.querySelectorAll(".product")).filter(function(card){return !card.hidden;});
+if(!visible.length){count.textContent="No visible rows to export. Change your search or filter.";return;}
+const rows=[["Product","Category","CAFANS ID","Reference USD","Source URL","Snapshot date","Selected size","Selected color","QC notes","Shipping quote USD","Questions"]];
+visible.forEach(function(card){
+rows.push([card.dataset.name,card.dataset.category,card.dataset.id,card.dataset.price,
+"https://cafans.com/goods-"+card.dataset.id+".html","2026-11-19","","","","",""]);
+});
+const csv="\uFEFF"+rows.map(function(row){
+return row.map(function(value){return '"'+String(value).replace(/"/g,'""')+'"';}).join(",");
+}).join("\r\n");
+const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8;"}));
+const link=document.createElement("a");
+link.href=url;
+link.download="orientdig-spreadsheet-cafans-selection.csv";
+document.body.appendChild(link);
+link.click();
+link.remove();
+setTimeout(function(){URL.revokeObjectURL(url);},1000);
+});
+
+const budget=document.getElementById("budget-form");
+function updateBudget(){
+const fields=Array.from(budget.querySelectorAll("input"));
+if(fields.some(function(field){return !field.validity.valid;})){
+document.getElementById("budget-total").textContent="Check your amounts";
+return;
+}
+const total=fields.reduce(function(sum,field){return sum+Math.max(0,Number(field.value)||0);},0);
+document.getElementById("budget-total").textContent=new Intl.NumberFormat("en-US",{
+style:"currency",currency:"USD"
+}).format(total);
+}
+budget.addEventListener("input",updateBudget);
+budget.addEventListener("submit",function(event){event.preventDefault();});
+document.querySelectorAll(".photo img").forEach(function(img){
+img.addEventListener("error",function(){
+const fallback=document.createElement("p");
+fallback.textContent="Source image unavailable. Find this listing on CAFANS using its product ID.";
+fallback.style.cssText="padding:32px;max-width:300px;margin:auto;color:#59675d";
+img.replaceWith(fallback);
+});
+});
+})();
+</script>
+</body>
+</html>
